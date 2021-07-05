@@ -72,15 +72,28 @@
 
                 <!-- /top navigation -->
                 <!-- page content -->
-                <div class="right_col" role="main">
-                    @RenderBody();
+        <div class="right_col" role="main">
+            <div class="leftcol" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>@ViewData["Title"]</h3>
+                        </div>
+
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                    @RenderBody()
+                    </div>
                 </div>
+          </div>
                 <!-- /page content -->
                 <!-- footer content -->
                 @Html.Partial("_Footer")
                 <!-- /footer content -->
             </div>
-    </div>
+        </div>
     <!-- jQuery -->
     <script src="/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
