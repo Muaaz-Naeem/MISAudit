@@ -1,0 +1,16 @@
+[
+ 
+  {
+    "outputFileName": "wwwroot/bundles/styles.min.css",
+    "inputFiles": [
+      "wwwroot/vendors/bootstrap/dist/css/bootstrap.min.css",
+      "wwwroot/css/custom.min.css",
+      "wwwroot/vendors/font-awesome/css/font-awesome.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+ 
+]
