@@ -22,6 +22,7 @@ namespace MISAudit.Controllers
 
         public IActionResult Index()
         {
+            //Hello
             return View();
         }
         public IActionResult About()
