@@ -18,7 +18,7 @@
       "wwwroot/vendors/jquery/dist/jquery.min.js",
       "wwwroot/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
       "wwwroot/js/custom.min.js"
-
+      
     ],
     "minify": {
       "enabled": true,
