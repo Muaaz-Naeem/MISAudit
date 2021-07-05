@@ -2,7 +2,6 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_LoginRegisterLayout.cshtml";
 
 }
 
@@ -38,7 +37,7 @@
             </div>
 
             <div>
-                <a class="btn btn-default submit" href="javascript:{}" onclick="document.getElementById('register').submit(); return false;">Submit</a>
+                <a class="submit" href="javascript:{}" onclick="document.getElementById('register').submit(); return false;">Submit</a>
             </div>
 
             <div class="clearfix"></div>
@@ -46,7 +45,7 @@
             <div class="separator">
                 <p class="change_link">
                     Already a member ?
-                    <a asp-page="/Account/Login" class="to_register"> Log in </a>
+                    <a asp-page="/Account/Login" class=""> Log in </a>
                 </p>
 
                 <div class="clearfix"></div>
