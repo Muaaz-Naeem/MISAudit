@@ -2,7 +2,8 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LoginRegisterLayout.cshtml";
+
 }
 
 
@@ -10,52 +11,54 @@
 
 <div class="col-sm-4">
 
+
 </div>
 
-    <div class="col-sm-3">
-        <section class="login_content">
-            <form asp-route-returnUrl="@Model.ReturnUrl" id="register" method="post">
-                <h1>Create Account</h1>
+<div class="col-sm-3">
+   <br/>
+    <section class="login_content">
+        <form asp-route-returnUrl="@Model.ReturnUrl" id="register" method="post">
+            <h1>Create Account</h1>
 
-                <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-                <div class="form-group">
-                    <input type="text" asp-for="Input.Email" class="form-control" placeholder="Email" required="" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-
-
-                <div class="form-group">
-                    <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password" required="" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <input type="text" asp-for="Input.Email" class="form-control" placeholder="Email" required="" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
 
 
-                <div class="form-group">
-                    <input type="password" asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" required="" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password" required="" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
 
-                <div>
-                    <a class="btn btn-default submit" href="javascript:{}" onclick="document.getElementById('register').submit(); return false;">Submit</a>
-                </div>
+
+            <div class="form-group">
+                <input type="password" asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" required="" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div>
+                <a class="btn btn-default submit" href="javascript:{}" onclick="document.getElementById('register').submit(); return false;">Submit</a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+                <p class="change_link">
+                    Already a member ?
+                    <a asp-page="/Account/Login" class="to_register"> Log in </a>
+                </p>
 
                 <div class="clearfix"></div>
-
-                <div class="separator">
-                    <p class="change_link">
-                        Already a member ?
-                        <a asp-page="/Account/Login" class="to_register"> Log in </a>
-                    </p>
-
-                    <div class="clearfix"></div>
-                    <br />
+                <br />
 
 
-                </div>
-            </form>
-        </section>
-    </div>
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }
+            </div>
+        </form>
+    </section>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
