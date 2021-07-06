@@ -1,0 +1,29 @@
+[
+
+  {
+    "outputFileName": "wwwroot/bundles/styles.min.css",
+    "inputFiles": [
+      "wwwroot/vendors/bootstrap/dist/css/bootstrap.min.css",
+      "wwwroot/css/custom.min.css",
+      "wwwroot/vendors/font-awesome/css/font-awesome.min.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundles/Scripts.min.js",
+    "inputFiles": [
+      "wwwroot/vendors/jquery/dist/jquery.min.js",
+      "wwwroot/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "wwwroot/js/custom.min.js"
+
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  }
+ 
+]
