@@ -5,8 +5,7 @@
     ViewBag.Title = "";
 }
 <div>
-    <a class="hiddenanchor" id="signup"></a>
-    <a class="hiddenanchor" id="signin"></a>
+   
 
     <div class="login_wrapper">
         <div class="animate form login_form">
@@ -25,23 +24,15 @@
                     <div class="form-group">
                         <input type="password" asp-for="Password" class="form-control" placeholder="Password" required="" />
                     </div>
-                    @*<div style="width:800px; margin:0 auto;">
-                        <input type="submit" value="Log In" class="btn btn-primary">
-                        </div>*@
-                    <div style="text-align:center">
-                        <a class="submit btn btn-lg btn-secondary" href="javascript:{}" onclick="document.getElementById('account').submit(); return false;">Log in</a>
-                    </div>
-
+                                
+                    <input type="submit" value="Log In" class="submit btn btn-secondary float-none" style="margin-left:auto">
+                    
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
                         <a asp-area="Identity" asp-page="/Account/ForgotPassword" class=""> Lost your password? </a>
-
-                        
-
                         <div class="clearfix"></div>
-
                     </div>
                 </form>
             </section>

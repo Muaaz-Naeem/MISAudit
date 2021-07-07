@@ -59,7 +59,10 @@ namespace MISAudit.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             TempData["ReturnUrl"] = returnUrl;
             ViewBag.ReturnUrl = returnUrl;
             
