@@ -1,20 +1,19 @@
+using MISAudit.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MISAudit.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISAudit
+namespace IdentityCore
 {
     public class Startup
     {
@@ -29,21 +28,24 @@ namespace MISAudit
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-              .AddEntityFrameworkStores<AppDbContext>();
+               options.UseSqlServer(       
+                   Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            //services.AddRazorPages();
+          
+            services.AddIdentity<ApplicationUser, IdentityRole>( )
+                .AddEntityFrameworkStores<AppDbContext>();
 
-                     services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
-                opt =>
-                {
-                    //configure your other properties
-                    opt.LoginPath = "/Account/Login";
-                  
-                });
+          
+
+            services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+    opt =>
+    {
+        //configure your other properties
+        opt.LoginPath = "/Account/Login";
+        opt.LogoutPath = "/Account/LogOff";
+    });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,7 +53,6 @@ namespace MISAudit
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -63,7 +64,6 @@ namespace MISAudit
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -72,7 +72,6 @@ namespace MISAudit
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapRazorPages();
             });
         }
     }

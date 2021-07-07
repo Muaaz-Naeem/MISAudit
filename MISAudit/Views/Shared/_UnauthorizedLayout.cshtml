@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,29 +15,26 @@
         <link href="~/bundles/styles.min.css" rel="stylesheet" />
     </environment>
 
-  
+
 </head>
-<body style="background-color:white">
-    <div>
-        <div>
+<body class="login">
+
+    @RenderBody()
 
 
-            <div class="clearfix"></div>
-            @RenderBody()
 
-
-        </div>
-    </div>
-    <environment include="Development">
-
-        <bundle name="wwwroot/bundles/scripts.min.js" />
-
-    </environment>
-    <environment exclude="Development">
-
-        <script src="~/bundles/scripts.min.js"></script>
-    </environment>
-    @RenderSection("Scripts", required: false)
 
 </body>
+
+
+<environment include="Development">
+
+    <bundle name="wwwroot/bundles/scripts.min.js" />
+
+</environment>
+<environment exclude="Development">
+
+    <script src="~/bundles/scripts.min.js"></script>
+</environment>
+@RenderSection("Scripts", required: false)
 </html>
