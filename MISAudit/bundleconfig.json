@@ -8,8 +8,7 @@
       "wwwroot/vendors/font-awesome/css/font-awesome.min.css"
     ],
     "minify": {
-      "enabled": true,
-      "renameLocals": true
+      "enabled": true
     }
   },
   {
@@ -18,12 +17,50 @@
       "wwwroot/vendors/jquery/dist/jquery.min.js",
       "wwwroot/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
       "wwwroot/js/custom.min.js"
-      
+
     ],
     "minify": {
-      "enabled": true,
-      "renameLocals": true
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundles/DataTables.min.js",
+    "inputFiles": [
+      "wwwroot/vendors/datatables.net/js/jquery.dataTables.min.js",
+      "wwwroot/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
+      "wwwroot/vendors/datatables.net-buttons/js/dataTables.buttons.min.js",
+      "wwwroot/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js",
+      "wwwroot/vendors/datatables.net-buttons/js/buttons.flash.min.js",
+      "wwwroot/vendors/datatables.net-buttons/js/buttons.html5.min.js",
+      "wwwroot/vendors/datatables.net-buttons/js/buttons.print.min.js",
+      "wwwroot/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+      "wwwroot/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js",
+      "wwwroot/vendors/datatables.net-responsive/js/dataTables.responsive.min.js",
+      "wwwroot/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js",
+      "wwwroot/vendors/datatables.net-scroller/js/dataTables.scroller.min.js",
+      "wwwroot/vendors/jszip/dist/jszip.min.js",
+      "wwwroot/vendors/pdfmake/build/pdfmake.min.js",
+      "wwwroot/vendors/pdfmake/build/vfs_fonts.js"
+
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundles/DataTables.min.css",
+    "inputFiles": [
+      "wwwroot/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+      "wwwroot/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+      "wwwroot/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css",
+      "wwwroot/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+      "wwwroot/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+      "wwwroot/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+    ],
+    "minify": {
+      "enabled": true
     }
   }
+ 
  
 ]
