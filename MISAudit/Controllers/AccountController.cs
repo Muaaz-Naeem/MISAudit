@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
+using System.Text.Encodings.Web;
+using Microsoft.Extensions.Logging;
+using MISAudit.Classes;
 
 namespace MISAudit.Controllers
 {
@@ -129,25 +132,71 @@ namespace MISAudit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            string smtpAddress = "smtp.gmail.com";
+            int portNumber = 587;
+            bool enableSSL = true;
+            string emailFromAddress = "sardarfahad667@gmail.com"; //Sender Email Address  
+            string password = "AmA_D6565"; //Sender Password  
+            string emailToAddress = model.Email; //Receiver Email Address  
+            string subject = "Password Recovery";
+            string body = String.Empty;
+
+            if(!ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                return View(model);
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    var user = await _userManager.FindByNameAsync(model.Email);
+            //    if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            //    {
+            //        // Don't reveal that the user does not exist or is not confirmed
+            //        return View("ForgotPasswordConfirmation");
+            //    }
+
+            //    return View("ForgotPasswordConfirmation");
+
+
+            //}
+
+            //// If we got this far, something failed, redisplay form
+            //return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callback = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
+            body = $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callback)}'>clicking here</a>.";
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback, null);
+           
+            SendEmail(emailFromAddress, emailToAddress, subject, body, smtpAddress, portNumber, password, enableSSL);
+            return View();
+        }
+
+        public void SendEmail(string emailFromAddress, string emailToAddress, string subject, string body, string smtpAddress, int portNumber, string password, bool enableSSL)
+
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(emailFromAddress);
+                mail.To.Add(emailToAddress);
+                mail.Subject = subject;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
+                using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    smtp.Credentials = new NetworkCredential(emailFromAddress, password);
+                    smtp.EnableSsl = enableSSL;
+                    smtp.Send(mail);
                 }
-
-                return View("ForgotPasswordConfirmation");
-
-
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
         }
-     
-            [AllowAnonymous]
+
+        [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -156,9 +205,10 @@ namespace MISAudit.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string code, string email)
         {
-            return View();
+            var model = new ResetPasswordViewModel { Code = code, Email = email };
+            return View(model);
             //return code == null ? View("Error") : View();
         }
 
@@ -169,22 +219,55 @@ namespace MISAudit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+            //var user = await _userManager.FindByNameAsync(model.Email);
+            //if (user == null)
+            //{
+            //    // Don't reveal that the user does not exist
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+            //var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+            ////AddErrors(result);
+            //return View();
+
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
-            var user = await _userManager.FindByNameAsync(model.Email);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("Unauthenticated", "Account");
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (!resetPassResult.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View();
             }
-            //AddErrors(result);
+
+            return RedirectToAction("ResetPasswordConfirmation", "Account");
+        }
+
+        [HttpGet]
+        public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Unauthenticated()
+        {
             return View();
         }
     }
